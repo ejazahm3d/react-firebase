@@ -18,7 +18,7 @@ const UploadForm = () => {
   };
   return (
     <>
-      <Input type="file" onChange={changeHandler}></Input>
+      <Input p="0.2rem" type="file" onChange={changeHandler}></Input>
 
       <Box my="1rem">
         {error && (

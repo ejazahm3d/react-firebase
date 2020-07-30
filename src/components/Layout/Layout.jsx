@@ -12,14 +12,9 @@ const Layout = ({ children }) => {
         justify="space-between"
         align="center"
         p="1.5rem 2rem"
-        bg="blue.100"
+        bg="blue.500"
       >
-        <Text
-          fontSize="4xl"
-          color="gray.600"
-          fontWeight="bold"
-          cursor="pointer"
-        >
+        <Text fontSize="2xl" color="white" cursor="pointer">
           React Firebase
         </Text>
         <Flex>

@@ -1,13 +1,22 @@
-import { useState, useEffect } from "react";
-import { projectStorage, projectFirestore } from "../firebase/config";
+import { useState, useEffect, useContext } from "react";
+import {
+  projectStorage,
+  projectFirestore,
+  timestamp,
+} from "../firebase/config";
+import { FirebaseAuthContext } from "../context/firebaseAuthContext";
 
 const useStorage = (file) => {
+  const user = useContext(FirebaseAuthContext);
   const [progress, setProgress] = useState(0);
   const [error, setError] = useState(null);
   const [url, setUrl] = useState(null);
   useEffect(() => {
     //  references
     const storageRef = projectStorage.ref(file.name);
+    const collectionRef = projectFirestore.collection(
+      `users/${user.uid}/images`
+    );
     storageRef.put(file).on(
       "state_changed",
       (snap) => {
@@ -19,10 +28,15 @@ const useStorage = (file) => {
       },
       async () => {
         const url = await storageRef.getDownloadURL();
+        const createdAt = timestamp();
+        collectionRef.add({
+          url,
+          createdAt,
+        });
         setUrl(url);
       }
     );
-  }, [file]);
+  }, [file, user]);
 
   return {
     progress,

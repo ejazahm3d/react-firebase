@@ -1,6 +1,6 @@
 import React, { useState } from "react";
-import { Input, Box, Text } from "@chakra-ui/core";
-
+import { Input, Text, Flex } from "@chakra-ui/core";
+import ProgressBar from "./ProgressBar";
 const UploadForm = () => {
   const [file, setFile] = useState(null);
   const [error, setError] = useState(null);
@@ -20,7 +20,13 @@ const UploadForm = () => {
     <>
       <Input p="0.2rem" type="file" onChange={changeHandler}></Input>
 
-      <Box my="1rem">
+      <Flex
+        my="1rem"
+        justify="center"
+        align="center"
+        flexDir="column"
+        width="100%"
+      >
         {error && (
           <Text fontSize="xl" color="red.300">
             {error}
@@ -28,7 +34,12 @@ const UploadForm = () => {
         )}
 
         {file && <Text fontSize="xl">{file.name}</Text>}
-      </Box>
+        {file && (
+          <Flex justifySelf="flex-start" width="100%">
+            <ProgressBar file={file} setFile={setFile} />
+          </Flex>
+        )}
+      </Flex>
     </>
   );
 };
